@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Todo List</h1>
+  <a href="{% url 'add_task' %}" class="btn btn-primary">Add Task</a>
+  <ul>
+    {% for task in tasks %}
+      <li>
+        {{ task.content }} - Created: {{ task.created_at }}
+        {% if task.deadline %} | Deadline: {{ task.deadline }} {% endif %}
+        {% if task.is_done %}
+          <span style="color: green;">(Done)</span>
+          <a href="{% url 'toggle_task_status' task.id %}" class="btn btn-warning">Undo</a>
+        {% else %}
+          <a href="{% url 'toggle_task_status' task.id %}" class="btn btn-success">Complete</a>
+        {% endif %}
+        <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
